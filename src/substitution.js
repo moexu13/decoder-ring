@@ -3,12 +3,11 @@ const referenceAlphabet = "abcdefghijklmnopqrstuvwxyz";
 function substitution(input, alphabet, encode = true) {
   if (alphabet.length !== 26 || !alphabetIsComplete(alphabet)) return false;
   
-  input = input.toLowerCase();
   if (input && encode) {
-    return encodeMessage(input, alphabet);
+    return encodeMessage(input.toLowerCase(), alphabet);
   }
   if(input && !encode) {
-    return decodeMessage(input, alphabet);
+    return decodeMessage(input.toLowerCase(), alphabet);
   }
 }
 

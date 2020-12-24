@@ -28,40 +28,51 @@ const grid = [
 ];
 
 function polybius(input, encode = true) {
-  let output = "";
   // the letter codes are in pairs so a string to be decoded has to be even excluding whitespace
   if (!encode && input.replace(/\s/g, "").length % 2 !== 0) {  
     return false;
   }
+
   if (input && encode) {
-    input = input.toLowerCase();
-    for (let i = 0; i < input.length; i++) {
-      if (input[i] !== " ") { 
-        output += grid.find(item => item.letter === input[i]).code;
-      } else {
-        output += input[i];
-      }
+    return encodeMessage(input.toLowerCase());
+  }
+  
+  if (input && !encode) {
+    return decodeMessage(input.toLowerCase());
+  }
+}
+
+function encodeMessage(input) {
+  let output = "";
+  for (let i = 0; i < input.length; i++) {
+    if (input[i] !== " ") { 
+      output += grid.find(item => item.letter === input[i]).code;
+    } else {
+      output += input[i];
     }
   }
-  if (input && !encode) {
-    // if the input contains spaces we don't want to use them when decoding
-    let encoded = input.split(" ");
-    encoded.forEach(chunk => {
-      // split numbers into pairs for decoding
-      let pairs = chunk.match(/\d{2}/g);
-      pairs.forEach(pair => {
-        // handle this special case separately
-        if (pair === "42") {
-          output += "(i/j)";
-        // everything else can be looked up
-        } else {
-          output += grid.find(item => item.code === pair).letter;
-        }
-      });
-      // put the spaces back
-      output += " ";
+  return output;
+}
+
+function decodeMessage(input) {
+  let output = "";
+  // if the input contains spaces we don't want to use them when decoding
+  let encoded = input.split(" ");
+  encoded.forEach(chunk => {
+    // split numbers into pairs for decoding
+    let pairs = chunk.match(/\d{2}/g);
+    pairs.forEach(pair => {
+      // handle this special case separately
+      if (pair === "42") {
+        output += "(i/j)";
+      // everything else can be looked up
+      } else {
+        output += grid.find(item => item.code === pair).letter;
+      }
     });
-  }
+    // put the spaces back
+    output += " ";
+  });
   // get rid of any extra whitespace left over from decoding
   return output.trim();
 }
