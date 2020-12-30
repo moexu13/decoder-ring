@@ -45,7 +45,10 @@ function polybius(input, encode = true) {
 function encodeMessage(input) {
   let output = "";
   for (let i = 0; i < input.length; i++) {
-    if (input[i] !== " ") { 
+    // any letters being passed in should be lower case (97 - 122 in ascii)
+    // leave anything else as is
+    const code = input.charCodeAt(i);
+    if (code > 96 && code < 123) {
       output += grid.find(item => item.letter === input[i]).code;
     } else {
       output += input[i];
@@ -67,13 +70,17 @@ function decodeMessage(input) {
         output += "(i/j)";
       // everything else can be looked up
       } else {
-        output += grid.find(item => item.code === pair).letter;
+        const letter = grid.find(item => item.code === pair).letter;
+        // if the pair isn't in the grid throw it away
+        if (letter.length) {
+          output += letter;
+        }
       }
     });
-    // put the spaces back
+    // put the spaces back in the simplest albeit clunkiest way
     output += " ";
   });
-  // get rid of any extra whitespace left over from decoding
+  // get rid of the extra whitespace due to the above clunkiness
   return output.trim();
 }
 

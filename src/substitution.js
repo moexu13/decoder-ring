@@ -19,14 +19,16 @@ function alphabetIsComplete(alphabet) {
 function encodeMessage(input, alphabet) {
   let output = "";
   for(let i = 0; i < input.length; i++) {
-    // leave spaces as is
-    if (input[i] === " ") {
-      output += input[i];
-    } else {
+    // any letters being passed in should be lower case (97 - 122 in ascii)
+    // leave anything else as is
+    const code = input.charCodeAt(i);
+    if (code > 96 && code < 123) {
       // get index of character in alphabet
-      // get character at same index in provided alphabet
       let index = referenceAlphabet.indexOf(input[i]);
+      // get character at same index in provided alphabet
       output += alphabet[index];
+    } else {
+      output += input[i];
     }
   }
   return output;
@@ -35,14 +37,16 @@ function encodeMessage(input, alphabet) {
 function decodeMessage(input, alphabet) {
   let output = "";
   for(let i = 0; i < input.length; i++) {
-    // leave spaces as is
-    if (input[i] === " ") {
-      output += input[i];
-    } else {
+    // any letters being passed in should be lower case (97 - 122 in ascii)
+    // leave anything else as is
+    const code = input.charCodeAt(i);
+    if (code > 96 && code < 123) {
       // find the index in the provided alpabet
-      // then find the same index in the regular alphabet
       let index = alphabet.indexOf(input[i]);
+      // then find the same index in the regular alphabet
       output += referenceAlphabet[index];
+    } else {
+      output += input[i];
     }
   }
   return output;

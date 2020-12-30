@@ -26,7 +26,7 @@ function asciiMap(char, shift) {
       // 96 should equal 122
       return String.fromCharCode(z - ((a - (char + shift)) - 1));
       // if the char code goes above z loop around to a
-      // 123 should equal
+      // 123 should equal 97
     } else if (char + shift > z) {
       return String.fromCharCode(a + ((char + shift) - z) - 1);
     } else {

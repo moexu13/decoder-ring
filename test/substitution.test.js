@@ -5,11 +5,11 @@ const substitution = require("../src/substitution");
 const alpha = "zyxwvutsrqponmlkjihgfedcba";
 
 describe("substitution", () => {
-  it("should return false if the alphabet parameter is not 26 characters", () => {
+  it("returns false if the alphabet parameter is not 26 characters", () => {
     const actual = substitution("test", "abcdef");
     expect(actual).to.be.false;
   });
-  it("should maintain string whitespace", () => {
+  it("maintains string whitespace", () => {
     const expected = "mld rh gsv drmgvi lu lfi wrhxlmgvmg";
     const actual = substitution("now is the winter of our discontent", alpha);
     expect(actual).to.equal(expected);
